@@ -1,0 +1,26 @@
+{
+  "name": "QMK CLI",
+  "image": "ghcr.io/qmk/qmk_cli",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "amodio.toggle-excluded-files",
+        "EditorConfig.EditorConfig",
+        "xaver.clang-format",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "bierner.github-markdown-preview",
+        "donjayamanne.git-extension-pack",
+        "ms-vscode-remote.remote-containers"
+      ]
+    }
+  },
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/../bkb,target=/workspaces/qmk/bkb,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/../main,target=/workspaces/qmk/main,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/../builds,target=/workspaces/qmk/builds,type=bind,consistency=cached"
+  ],
+
+  "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/setup.sh ${containerWorkspaceFolder}"
+}

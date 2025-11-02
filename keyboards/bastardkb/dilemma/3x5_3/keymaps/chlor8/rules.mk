@@ -1,2 +1,1 @@
-USER_NAME = chlor8
-SRC += -I$(USER_PATH)
+SRC += chlor8.c
