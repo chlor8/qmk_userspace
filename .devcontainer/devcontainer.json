@@ -19,7 +19,8 @@
   "mounts": [
     "source=${localWorkspaceFolder}/../bkb,target=/workspaces/qmk/bkb,type=bind,consistency=cached",
     "source=${localWorkspaceFolder}/../main,target=/workspaces/qmk/main,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../builds,target=/workspaces/qmk/builds,type=bind,consistency=cached"
+    "source=${localWorkspaceFolder}/../builds,target=/workspaces/qmk/builds,type=bind,consistency=cached",
+    "source=${env:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
   ],
 
   "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/setup.sh ${containerWorkspaceFolder}"
