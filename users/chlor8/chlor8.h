@@ -25,6 +25,11 @@ enum combo_events {
     C_ESC,
 };
 
+enum custom_keycodes {
+    DUMP_CFG = SAFE_RANGE,
+};
+
+
 #define QWERTY DF(_QWERTY)
 #define SYM MO(_SYM)
 #define NAV MO(_NAV)
@@ -38,7 +43,6 @@ enum combo_events {
 #define ALT_QUOT MT(OSM(MOD_LALT), KC_QUOTE)
 #define TAB_NAV LT(NAV, KC_TAB)
 #define TAB_NGAME LT(GAMEN, KC_TAB)
-#define BSP_NAV LT(NAV, KC_BSPC)
 
 #define KC_REDO LCTL(KC_Y)
 #define KC_UNDO LCTL(KC_Z)
@@ -49,7 +53,7 @@ enum combo_events {
 #define CTLSHFT OSM(MOD_LCTL | MOD_LSFT)
 #define CTLALT OSM(MOD_LCTL | MOD_RALT)
 #define ALTSHFT OSM(MOD_RSFT | MOD_RALT)
-#define BSP_NAV LT(NAV, KC_BSPC)
+#define BSP_GAME LT(GAMEN, KC_BSPC)
 #define ESC_ALT MT(OSM(MOD_LALT), KC_ESC)
 #define CTL_ENT MT(OSM(MOD_LCTL), KC_ENTER)
 // homerow mods

@@ -1,1 +1,3 @@
 SRC += chlor8.c
+ENCODER_MAP_ENABLE = yes
+MOUSEKEY_ENABLE = yes

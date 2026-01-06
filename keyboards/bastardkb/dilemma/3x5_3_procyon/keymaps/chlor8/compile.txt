@@ -1,0 +1,1 @@
+qmk compile -kb bastardkb/dilemma/3x5_3_procyon -km chlor8
