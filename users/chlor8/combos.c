@@ -20,3 +20,7 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo) {
     }
     return COMBO_TERM;
 }
+
+bool get_combo_must_tap(uint16_t index, combo_t *combo) {
+    return true;
+}
