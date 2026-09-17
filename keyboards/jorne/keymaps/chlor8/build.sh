@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Build both Jorne halves in the QMK container and collect them in one folder.
-# usage: build.sh [out_dir]   (default ~/Downloads/jorne-firmware)
+# usage: build.sh [out_dir]   (default ~/Documents/jorne-firmware)
 set -euo pipefail
 
 userspace=$(cd "$(dirname "$0")/../../../.." && pwd)
 qmk_home=${QMK_HOME:-$HOME/qmk_firmware}
-out=${1:-$HOME/Downloads/jorne-firmware}
+out=${1:-$HOME/Documents/jorne-firmware}
 
 [ -d "$qmk_home" ] || git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/qmk/qmk_firmware "$qmk_home"
 

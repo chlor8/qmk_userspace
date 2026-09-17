@@ -52,7 +52,7 @@ Some keys aren't just a modifier swap. These send a different chord per mode (se
 keyboards/jorne/keymaps/chlor8/build.sh [out_dir]
 ```
 
-This builds both halves from upstream QMK (`~/qmk_firmware`, cloned if missing) inside the `ghcr.io/qmk/qmk_cli` container via podman, so nothing gets installed on the host. Output goes to `~/Downloads/jorne-firmware/` by default:
+This builds both halves from upstream QMK (`~/qmk_firmware`, cloned if missing) inside the `ghcr.io/qmk/qmk_cli` container via podman, so nothing gets installed on the host. Output goes to `~/Documents/jorne-firmware/` by default:
 
 - `jorne-LEFT-blok.uf2`: left half (Blok).
 - `jorne-RIGHT-promicro.hex`: right half (Pro Micro).
@@ -67,7 +67,7 @@ Flash both halves after every keymap change.
 - **Right (Pro Micro):** start the command below, then short RST to GND twice. The bootloader stays open for about 8 s.
 
   ```sh
-  podman run --rm -it --privileged -v /dev:/dev -v ~/Downloads/jorne-firmware:/fw ghcr.io/qmk/qmk_cli \
+  podman run --rm -it --privileged -v /dev:/dev -v ~/Documents/jorne-firmware:/fw ghcr.io/qmk/qmk_cli \
     sh -c 'until ls /dev/ttyACM* 2>/dev/null; do sleep 0.5; done; avrdude -p atmega32u4 -c avr109 -P $(ls /dev/ttyACM* | head -1) -U flash:w:/fw/jorne-RIGHT-promicro.hex:i'
   ```
 
