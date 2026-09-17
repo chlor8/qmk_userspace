@@ -7,14 +7,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT_split_3x5_3(
   KC_Q   ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                     KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P ,
-  GUI_A ,  ALT_S   ,  SHIFT_D  ,   CTRL_F ,   KC_G ,                                     KC_H,   CTRL_J ,  SHIFT_K ,   ALT_L ,GUI_QUOT,
+  CTL_A ,  OPT_S   ,  SFT_D  ,   CMD_F ,   KC_G ,                                     KC_H,   CMD_J ,  SFT_K ,   OPT_L ,CTL_QUOT,
   KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B ,                                     KC_N,   KC_M ,KC_COMM, KC_DOT ,KC_UNDERSCORE ,
                     FKEYS, TAB_NAV , KC_BSPC,                                              KC_SPACE, SYM, FKEYS
 ),
 
 [_NAV] = LAYOUT_split_3x5_3(
   KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, KC_REDO,                                    _______, KC_PGDN, KC_PGUP, _______, FKEYS,
-  KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, QK_MOUSE_BUTTON_1,                                   KC_LEFT , KC_DOWN , KC_UP   ,KC_RIGHT, _______,
+  KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, QK_MOUSE_BUTTON_1,                                   KC_LEFT , KC_DOWN , KC_UP   ,KC_RIGHT, _______,
   _______, _______, _______, _______, QK_MOUSE_BUTTON_2,                                       _______, _______, _______, _______, GAME,
   _______, _______, _______,                                               _______, _______, _______
 ),
@@ -37,8 +37,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_FUNCTION] = LAYOUT_split_3x5_3(
 
   KC_F1, KC_F2, KC_F3, KC_F4, KC_F5,                                       KC_F6,  KC_F7 ,  KC_F8,  KC_F9,  KC_F10,
-   _______, SNP_TOG, DPI_MOD, DPI_RMOD, _______,                                     KC_F11,  KC_F12 ,  _______ ,   _______,  _______ ,
-   _______, _______, _______, KC_PRINT_SCREEN, _______,                                     _______,  _______ ,  _______ ,  _______ ,  _______ ,
+   OS_TOG, SNP_TOG, DPI_MOD, DPI_RMOD, _______,                                     KC_F11,  KC_F12 ,  _______ ,   _______,  _______ ,
+   _______, _______, _______, SCRNSHT, _______,                                     _______,  _______ ,  _______ ,  _______ ,  _______ ,
                      _______, _______, QK_BOOT,                                                QK_BOOT, _______, _______
 ),
 

@@ -1,13 +1,13 @@
 #include "chlor8.h"
 
-const uint16_t PROGMEM jk[] = {CTRL_J, SHIFT_K, COMBO_END};
-const uint16_t PROGMEM kl[] = {SHIFT_K, ALT_L, COMBO_END};
-const uint16_t PROGMEM sd[] = {ALT_S, SHIFT_D, COMBO_END};
-const uint16_t PROGMEM sf[] = {ALT_S, CTRL_F, COMBO_END};
+const uint16_t PROGMEM jk[] = {CMD_J, SFT_K, COMBO_END};
+const uint16_t PROGMEM kl[] = {SFT_K, OPT_L, COMBO_END};
+const uint16_t PROGMEM sd[] = {OPT_S, SFT_D, COMBO_END};
+const uint16_t PROGMEM sf[] = {OPT_S, CMD_F, COMBO_END};
 
 combo_t key_combos[] = {
-    [ENDLINE] = COMBO(jk, KC_HOME),
-    [STARTLINE] = COMBO(kl, KC_END),
+    [ENDLINE] = COMBO(jk, LN_BEG),
+    [STARTLINE] = COMBO(kl, LN_END),
     [C_ENTER] = COMBO(sd, KC_ENTER),
     [C_ESC] = COMBO(sf, KC_ESC),
 };
