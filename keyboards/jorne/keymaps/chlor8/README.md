@@ -13,7 +13,6 @@ The Jorne here is snapped down to 3x5+3 (36 keys). Both halves are RP2040: a Boa
 - **NUM:** hold NAV and SYM together.
 - **FUNCTION** (NAV + P position):
   - F1–F12.
-  - `OS_TOG` sits on the A position.
   - Screenshot sits on V.
   - `QK_BOOT` is on the inner thumbs.
 - **Combos:**
@@ -23,28 +22,18 @@ The Jorne here is snapped down to 3x5+3 (36 keys). Both halves are RP2040: a Boa
   - Letters are shifted one column right. The pinky column is Esc/Alt, Enter/Ctrl, Z/Shift.
   - Hold the left outer thumb (Tab) for numbers: 1–5 on the top row, 6–0 on the home row.
 
-## Mac / Linux mode
+## Mac shortcuts everywhere
 
-On plug-in, QMK OS detection picks the mode:
+The board always sends Mac modifiers and shortcuts, so the same fingers do the same thing on every computer:
 
-- **macOS / iOS:** Mac mode. Cmd keys send Cmd.
-- **Linux / Windows:** Linux mode. The same keys send Ctrl, so Ctrl+C, Ctrl+Z and the rest work without remapping software.
-- **Unsure:** keeps the last `OS_TOG` setting.
+- Index finger is Cmd, pinky is Ctrl.
+- Line start/end is Cmd+←/→, word jump is Opt+←/→, screenshot is Cmd+Shift+4.
 
-Detection only changes the mode in RAM, so plugging in never writes EEPROM.
+On Linux, [Toshy](https://github.com/RedBearAK/toshy) turns those Mac shortcuts into Linux ones, including per-app cases like terminal copy and Cmd+Tab. The board must be set as an Apple keyboard in Toshy:
 
-`OS_TOG` (QMK `CG_TOGG`) flips the mode by hand and stores it in EEPROM. Use it when detection guesses wrong, for example through a KVM or hub. The next plug-in re-runs detection.
-
-If you use Toshy on Linux, turn detection off (`OS_DETECTION_ENABLE = no` in `users/chlor8/rules.mk`) and keep the board in Mac mode. Toshy expects Cmd, not Ctrl.
-
-Some keys aren't just a modifier swap. These send a different chord per mode (see `users/chlor8/chlor8.c`):
-
-| Key | Mac | Linux |
-|---|---|---|
-| `LN_BEG` / `LN_END` | Cmd+← / Cmd+→ | Home / End |
-| `WD_LEFT` / `WD_RGHT` | Opt+← / Opt+→ | Ctrl+← / Ctrl+→ |
-| `SCRNSHT` | Cmd+Shift+4 | PrintScreen |
-
+1. Run `toshy-devices` and note the board's device name.
+2. Add it to the custom keyboard dictionary in `~/.config/toshy/toshy_config.py` as `'<device name>': 'Apple'`.
+3. Run `toshy-services-restart`.
 
 ## Build
 

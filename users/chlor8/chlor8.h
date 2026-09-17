@@ -19,14 +19,8 @@ enum combo_events {
     C_ESC,
 };
 
-// Shortcuts that differ beyond a Ctrl<->Cmd swap; resolved per OS mode in chlor8.c.
 enum custom_keycodes {
     DUMP_CFG = SAFE_RANGE,
-    LN_BEG,
-    LN_END,
-    WD_LEFT,
-    WD_RGHT,
-    SCRNSHT,
 };
 
 #define QWERTY DF(_QWERTY)
@@ -36,8 +30,12 @@ enum custom_keycodes {
 #define GAME TG(_GAMING)
 #define GAMEN MO(_NUM_GAMING)
 
-// Mac mode sends Cmd; Linux mode swaps Ctrl<->GUI so the same keys send Ctrl. Stored in EEPROM.
-#define OS_TOG CG_TOGG
+// Mac shortcuts on every host; Linux gets them via Toshy (keyboard type "Apple").
+#define LN_BEG  LGUI(KC_LEFT)
+#define LN_END  LGUI(KC_RGHT)
+#define WD_LEFT LALT(KC_LEFT)
+#define WD_RGHT LALT(KC_RGHT)
+#define SCRNSHT LSG(KC_4)
 
 #define SHIFT_Z LSFT_T(KC_Z)
 #define TAB_NAV LT(_NAV, KC_TAB)
@@ -57,7 +55,7 @@ enum custom_keycodes {
 #define CTLALT OSM(MOD_LCTL | MOD_RALT)
 #define ALTSHFT OSM(MOD_RSFT | MOD_RALT)
 
-// homerow mods, Cmd on index; left-side GUI/Ctrl bits so the OS swap covers both hands
+// homerow mods, Cmd on index
 // left hand
 #define CTL_A    MT(MOD_LCTL, KC_A)
 #define OPT_S    MT(MOD_LALT, KC_S)

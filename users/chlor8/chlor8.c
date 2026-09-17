@@ -2,42 +2,6 @@
 
 uint8_t mod_state;
 
-// Linux mode = Ctrl<->GUI swap on (OS_TOG).
-static bool os_is_linux(void) {
-    return keymap_config.swap_lctl_lgui;
-}
-
-// Returns the concrete chord for an OS-dependent keycode, or KC_NO if not one.
-static uint16_t os_chord(uint16_t keycode) {
-    bool on_linux = os_is_linux();
-    switch (keycode) {
-        case LN_BEG:  return on_linux ? KC_HOME : LGUI(KC_LEFT);
-        case LN_END:  return on_linux ? KC_END : LGUI(KC_RGHT);
-        case WD_LEFT: return on_linux ? LCTL(KC_LEFT) : LALT(KC_LEFT);
-        case WD_RGHT: return on_linux ? LCTL(KC_RGHT) : LALT(KC_RGHT);
-        case SCRNSHT: return on_linux ? KC_PSCR : LSG(KC_4);
-    }
-    return KC_NO;
-}
-
-// Set Mac/Linux mode from the host on plug-in. RAM only: no EEPROM wear per plug,
-// and OS_TOG's stored value still applies when detection is unsure.
-bool process_detected_host_os_user(os_variant_t os) {
-    switch (os) {
-        case OS_MACOS:
-        case OS_IOS:
-            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
-            break;
-        case OS_LINUX:
-        case OS_WINDOWS:
-            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
-            break;
-        case OS_UNSURE:
-            break;
-    }
-    return true;
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods();
 
@@ -66,23 +30,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
 
         return true;
-    }
-
-    case LN_BEG:
-    case LN_END:
-    case WD_LEFT:
-    case WD_RGHT:
-    case SCRNSHT: {
-        // Remember the chord sent on press so a mid-hold OS toggle can't strand keys.
-        static uint16_t held[SCRNSHT - LN_BEG + 1];
-        uint8_t slot = keycode - LN_BEG;
-        if (record->event.pressed) {
-            held[slot] = os_chord(keycode);
-            register_code16(held[slot]);
-        } else {
-            unregister_code16(held[slot]);
-        }
-        return false;
     }
 
     //
