@@ -55,11 +55,16 @@ The Dilemma doesn't build on current `bkb-develop`: `DPI_MOD`, `DPI_RMOD` and `S
 
 ## Flash
 
-Both halves flash the same way. Flash both after every keymap change.
+Flash both halves after every keymap change. Each half enters its bootloader on its own, with USB plugged into that half.
 
-1. Unplug the keyboard and the TRRS cable.
-2. Hold BOOT while plugging the half in (or double-tap reset). An `RPI-RP2` drive appears.
-3. Copy that half's file onto the drive: `jorne-LEFT-blok.uf2` for the left, `jorne-RIGHT-rp2040ce.uf2` for the right. It reboots by itself.
+1. Unplug USB and the TRRS cable. TRRS carries power: never hot-plug it.
+2. Plug USB into the half you're flashing and enter the bootloader. Any of these works:
+   - Hold **Q** (left) or **P** (right) while plugging in (Bootmagic; also clears EEPROM).
+   - Double-tap that half's reset button within 500 ms.
+   - Hold the controller's BOOT button while plugging in. This works even with broken firmware.
+   - Press `QK_BOOT` (NAV + P position, then an inner thumb). It resets the USB-connected half only.
+3. An `RPI-RP2` drive appears. Copy that half's file onto it: `jorne-LEFT-blok.uf2` for the left, `jorne-RIGHT-rp2040ce.uf2` for the right. It reboots by itself.
+4. Unplug, reconnect TRRS, then plug USB into the left half.
 
 ## Hardware caveats
 

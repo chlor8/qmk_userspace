@@ -19,3 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #pragma once
+
+// Default (0,0) is an outer key that was snapped off; use Q instead.
+// With USB in the right half it is master and scans as "left", so (0,1) is its P key.
+#define BOOTMAGIC_ROW 0
+#define BOOTMAGIC_COLUMN 1
+#define BOOTMAGIC_ROW_RIGHT 4
+#define BOOTMAGIC_COLUMN_RIGHT 1
