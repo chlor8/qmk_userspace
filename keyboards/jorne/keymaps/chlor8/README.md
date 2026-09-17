@@ -25,10 +25,17 @@ The Jorne here is snapped down to 3x5+3 (36 keys). The left half has a Boardsour
 
 ## Mac / Linux mode
 
-`OS_TOG` (QMK `CG_TOGG`) swaps Ctrl and Cmd, and the setting is stored in EEPROM.
+On plug-in, QMK OS detection picks the mode:
 
-- **Mac mode (default):** Cmd keys send Cmd.
-- **Linux mode:** the same keys send Ctrl, so Ctrl+C, Ctrl+Z and the rest work on Linux without any remapping software.
+- **macOS / iOS:** Mac mode. Cmd keys send Cmd.
+- **Linux / Windows:** Linux mode. The same keys send Ctrl, so Ctrl+C, Ctrl+Z and the rest work without remapping software.
+- **Unsure:** keeps the last `OS_TOG` setting.
+
+Detection only changes the mode in RAM, so plugging in never writes EEPROM.
+
+`OS_TOG` (QMK `CG_TOGG`) flips the mode by hand and stores it in EEPROM. Use it when detection guesses wrong, for example through a KVM or hub. The next plug-in re-runs detection.
+
+If you use Toshy on Linux, turn detection off (`OS_DETECTION_ENABLE = no` in `users/chlor8/rules.mk`) and keep the board in Mac mode. Toshy expects Cmd, not Ctrl.
 
 Some keys aren't just a modifier swap. These send a different chord per mode (see `users/chlor8/chlor8.c`):
 
@@ -38,36 +45,30 @@ Some keys aren't just a modifier swap. These send a different chord per mode (se
 | `WD_LEFT` / `WD_RGHT` | Opt+← / Opt+→ | Ctrl+← / Ctrl+→ |
 | `SCRNSHT` | Cmd+Shift+4 | PrintScreen |
 
-A flash that clears EEPROM starts in Mac mode. Tap `OS_TOG` once when you're on Linux.
 
 ## Build
 
-The Jorne builds from upstream QMK (`qmk/qmk_firmware`). The Dilemma builds from `Bastardkb/bastardkb-qmk@bkb-develop`, which CI uses. The toolchain runs in the QMK container, so nothing gets installed on the host:
-
 ```sh
-podman run --rm --security-opt label=disable \
-  -v ~/qmk_firmware:/qmk -v "$PWD":/us -w /us ghcr.io/qmk/qmk_cli \
-  bash -c 'git config --global --add safe.directory "*"; qmk config user.qmk_home=/qmk user.overlay_dir=/us; \
-           qmk compile -kb jorne/rev1 -km chlor8 && qmk compile -kb jorne/rev1 -km chlor8 -e CONVERT_TO=blok'
+keyboards/jorne/keymaps/chlor8/build.sh [out_dir]
 ```
 
-Run it from the userspace root. It produces:
+This builds both halves from upstream QMK (`~/qmk_firmware`, cloned if missing) inside the `ghcr.io/qmk/qmk_cli` container via podman, so nothing gets installed on the host. Output goes to `~/Downloads/jorne-firmware/` by default:
 
-- `jorne_rev1_chlor8.hex`: right half (Pro Micro).
-- `jorne_rev1_chlor8_blok.uf2`: left half (Blok).
+- `jorne-LEFT-blok.uf2`: left half (Blok).
+- `jorne-RIGHT-promicro.hex`: right half (Pro Micro).
 
-The Dilemma doesn't build on current `bkb-develop`: `DPI_MOD`, `DPI_RMOD` and `SNP_TOG` are undeclared there.
+The Dilemma builds from `Bastardkb/bastardkb-qmk@bkb-develop` (CI). It doesn't build on current `bkb-develop`: `DPI_MOD`, `DPI_RMOD` and `SNP_TOG` are undeclared there.
 
 ## Flash
 
 Flash both halves after every keymap change.
 
-- **Left (Blok):** hold BOOT while plugging in, then copy the `.uf2` onto the `RPI-RP2` drive.
+- **Left (Blok):** hold BOOT while plugging in, then copy `jorne-LEFT-blok.uf2` onto the `RPI-RP2` drive.
 - **Right (Pro Micro):** start the command below, then short RST to GND twice. The bootloader stays open for about 8 s.
 
   ```sh
-  podman run --rm -it --privileged -v /dev:/dev -v "$PWD":/fw ghcr.io/qmk/qmk_cli \
-    sh -c 'until ls /dev/ttyACM* 2>/dev/null; do sleep 0.5; done; avrdude -p atmega32u4 -c avr109 -P $(ls /dev/ttyACM* | head -1) -U flash:w:/fw/jorne_rev1_chlor8.hex:i'
+  podman run --rm -it --privileged -v /dev:/dev -v ~/Downloads/jorne-firmware:/fw ghcr.io/qmk/qmk_cli \
+    sh -c 'until ls /dev/ttyACM* 2>/dev/null; do sleep 0.5; done; avrdude -p atmega32u4 -c avr109 -P $(ls /dev/ttyACM* | head -1) -U flash:w:/fw/jorne-RIGHT-promicro.hex:i'
   ```
 
 ## Hardware caveats

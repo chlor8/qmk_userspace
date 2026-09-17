@@ -20,6 +20,24 @@ static uint16_t os_chord(uint16_t keycode) {
     return KC_NO;
 }
 
+// Set Mac/Linux mode from the host on plug-in. RAM only: no EEPROM wear per plug,
+// and OS_TOG's stored value still applies when detection is unsure.
+bool process_detected_host_os_user(os_variant_t os) {
+    switch (os) {
+        case OS_MACOS:
+        case OS_IOS:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+            break;
+        case OS_LINUX:
+        case OS_WINDOWS:
+            keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+            break;
+        case OS_UNSURE:
+            break;
+    }
+    return true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods();
 
