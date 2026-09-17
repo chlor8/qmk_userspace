@@ -48,16 +48,21 @@ Some keys aren't just a modifier swap. These send a different chord per mode (se
 
 ## Build
 
+From the userspace root:
+
 ```sh
-keyboards/jorne/keymaps/chlor8/build.sh [out_dir]
+./build.sh            # all boards: jorne 3w6 dilemma
+./build.sh jorne      # just this one
 ```
 
-This builds both halves from upstream QMK (`~/qmk_firmware`, cloned if missing) inside the `ghcr.io/qmk/qmk_cli` container via podman, so nothing gets installed on the host. Output goes to `~/Documents/jorne-firmware/` by default:
+Builds run inside the `ghcr.io/qmk/qmk_cli` container via podman, so nothing gets installed on the host. Files land in `~/Documents/keyboards/<board>/`:
 
-- `jorne-LEFT-blok.uf2`: left half (Blok).
-- `jorne-RIGHT-promicro.hex`: right half (Pro Micro).
+- `jorne/jorne-LEFT-blok.uf2`: left half (Blok).
+- `jorne/jorne-RIGHT-promicro.hex`: right half (Pro Micro).
 
-The Dilemma builds from `Bastardkb/bastardkb-qmk@bkb-develop` (CI). It doesn't build on current `bkb-develop`: `DPI_MOD`, `DPI_RMOD` and `SNP_TOG` are undeclared there.
+The Jorne and 3w6 build from upstream QMK (`~/qmk_firmware`). The Dilemma builds from `Bastardkb/bastardkb-qmk@bkb-develop` (`~/bastardkb-qmk`). Missing trees are cloned on first run.
+
+The Dilemma doesn't build on current `bkb-develop`: `DPI_MOD`, `DPI_RMOD` and `SNP_TOG` are undeclared there.
 
 ## Flash
 
@@ -67,7 +72,7 @@ Flash both halves after every keymap change.
 - **Right (Pro Micro):** start the command below, then short RST to GND twice. The bootloader stays open for about 8 s.
 
   ```sh
-  podman run --rm -it --privileged -v /dev:/dev -v ~/Documents/jorne-firmware:/fw ghcr.io/qmk/qmk_cli \
+  podman run --rm -it --privileged -v /dev:/dev -v ~/Documents/keyboards/jorne:/fw ghcr.io/qmk/qmk_cli \
     sh -c 'until ls /dev/ttyACM* 2>/dev/null; do sleep 0.5; done; avrdude -p atmega32u4 -c avr109 -P $(ls /dev/ttyACM* | head -1) -U flash:w:/fw/jorne-RIGHT-promicro.hex:i'
   ```
 
