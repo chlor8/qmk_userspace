@@ -4,6 +4,14 @@ The Jorne here is snapped down to 3x5+3 (36 keys). Both halves are RP2040: a Boa
 
 ## Layout
 
+![chlor8 keymap](../../../../keymap/chlor8.svg)
+
+The picture comes from `keymap/chlor8.yaml` via [keymap-drawer](https://github.com/caksoylar/keymap-drawer). Edit the YAML when the keymap changes, then re-render:
+
+```sh
+uvx --from keymap-drawer keymap -c keymap/config.yaml draw keymap/chlor8.yaml -o keymap/chlor8.svg
+```
+
 - **Home-row mods (pinky → index):** Ctrl, Opt, Shift, Cmd on both hands.
 - **NAV** (hold left thumb Tab):
   - Top row: undo, cut, copy, paste, redo. These send Cmd shortcuts.

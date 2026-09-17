@@ -1,0 +1,50 @@
+# Shared chlor8 layout (Jorne, 3w6, Dilemma). Render: uvx --from keymap-drawer keymap -c keymap/config.yaml draw keymap/chlor8.yaml -o keymap/chlor8.svg
+layout:
+  qmk_keyboard: crkbd/rev1
+  layout_name: LAYOUT_split_3x5_3
+layers:
+  BASE:
+    - [Q, W, E, R, T, Y, U, I, O, P]
+    - [{t: A, h: ⌃ Ctrl}, {t: S, h: ⌥ Opt}, {t: D, h: ⇧ Shift}, {t: F, h: ⌘ Cmd}, G, H, {t: J, h: ⌘ Cmd}, {t: K, h: ⇧ Shift}, {t: L, h: ⌥ Opt}, {t: "'", h: ⌃ Ctrl}]
+    - [Z, X, C, V, B, N, M, ",", ., _]
+    - ["", {t: Tab, h: NAV}, {t: ⌫, s: "⇧ ⌦"}, Space, SYM, ⌦]
+  NAV:
+    - [{t: Undo, s: ⌘Z}, {t: Cut, s: ⌘X}, {t: Copy, s: ⌘C}, {t: Paste, s: ⌘V}, {t: Redo, s: ⇧⌘Z}, "", PgDn, PgUp, "", {t: FN, h: hold}]
+    - [⌃, ⌥, ⇧, ⌘, "", ←, ↓, ↑, →, ""]
+    - [Repeat, "", "", "", "", {t: Word ←, s: ⌥←}, {t: Word →, s: ⌥→}, "", ⌦, {t: GAME, h: toggle}]
+    - [{type: trans}, {type: held}, {type: trans}, {type: trans}, {type: trans}, {type: trans}]
+  SYM:
+    - ["%", "[", "]", "`", "#", "|", "&", "*", "^", ";"]
+    - ["?", "(", ")", ":", '"', "-", "=", "<", ">", "!"]
+    - ["@", "{", "}", "\\", "$", "+", "/", {type: trans}, {type: trans}, "~"]
+    - [{type: trans}, {type: trans}, {type: trans}, {type: trans}, {type: held}, {type: trans}]
+  NUM (NAV+SYM):
+    - ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+    - ["", "", "", "", "", "", "", "", "", ""]
+    - ["", "", "", "", "", "", "", "", "", ""]
+    - [{type: trans}, {type: held}, {type: trans}, {type: trans}, {type: held}, {type: trans}]
+  FN (NAV + P):
+    - [F1, F2, F3, F4, F5, F6, F7, F8, F9, {type: held}]
+    - ["", "", "", "", "", F11, F12, "", "", ""]
+    - ["", "", "", {t: Shot, s: ⇧⌘4}, "", "", "", "", "", ""]
+    - [{type: trans}, {type: held}, {t: BOOT, s: flash}, {t: BOOT, s: flash}, {type: trans}, {type: trans}]
+  GAME:
+    - [{t: Esc, h: ⌥}, Q, W, E, R, Y, U, I, O, P]
+    - [{t: Enter, h: ⌃}, A, S, D, F, H, J, K, L, {type: trans}]
+    - [{t: Z, h: ⇧}, X, C, V, B, N, M, ",", Esc, {t: GAME, h: "off"}]
+    - [{t: Tab, h: NUM}, {t: ⌫, h: NAV}, Space, Space, SYM, {type: trans}]
+  GAME NUM (hold Tab):
+    - ["1", "2", "3", "4", "5", "", "", "", "", ""]
+    - ["6", "7", "8", "9", "0", "", "", "", "", ""]
+    - ["", "", "", "", "", "", "", "", "", ""]
+    - [{type: held}, {type: trans}, {type: trans}, {type: trans}, {type: trans}, {type: trans}]
+  ⌘ SHORTCUTS (hold F or J):
+    - [{t: Quit, s: ⌘Q}, {t: Close, s: ⌘W}, "", {t: Reload, s: ⌘R}, {t: New tab, s: ⌘T}, "", "", "", "", {t: Print, s: ⌘P}]
+    - [{t: All, s: ⌘A}, {t: Save, s: ⌘S}, "", {type: held}, "", {t: Hide, s: ⌘H}, {type: held}, "", {t: URL bar, s: ⌘L}, ""]
+    - [{t: Undo, s: ⌘Z}, {t: Cut, s: ⌘X}, {t: Copy, s: ⌘C}, {t: Paste, s: ⌘V}, "", {t: New, s: ⌘N}, {t: Minimize, s: ⌘M}, {t: Settings, s: "⌘,"}, "", ""]
+    - ["", {t: App switch, s: ⌘Tab}, {t: Del line, s: ⌘⌫}, {t: Launcher, s: ⌘Space}, "", ""]
+combos:
+  - {p: [16, 17], k: {t: Line start, s: ⌘←}, l: [BASE]}
+  - {p: [17, 18], k: {t: Line end, s: ⌘→}, l: [BASE]}
+  - {p: [11, 12], k: Enter, l: [BASE]}
+  - {p: [11, 13], k: Esc, l: [BASE], a: bottom}

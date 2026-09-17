@@ -1,0 +1,10 @@
+draw_config:
+  dark_mode: auto
+  n_columns: 2
+  key_w: 64
+  key_h: 60
+  combo_w: 44
+  combo_h: 30
+  append_colon_to_layer_header: false
+  separate_combo_diagrams: true
+  combo_diagrams_scale: 2
