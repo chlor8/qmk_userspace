@@ -1,6 +1,6 @@
 # Jorne — chlor8
 
-The Jorne here is snapped down to 3x5+3 (36 keys). The left half has a Boardsource Blok (RP2040) and the right half has a Pro Micro (ATmega32u4). The keymap shares `users/chlor8` with the Dilemma, crkbd and 3w6.
+The Jorne here is snapped down to 3x5+3 (36 keys). Both halves are RP2040: a Boardsource Blok on the left and an RP2040-CE Pro Micro on the right. The keymap shares `users/chlor8` with the Dilemma, crkbd and 3w6.
 
 ## Layout
 
@@ -55,10 +55,10 @@ From the userspace root:
 ./build.sh jorne      # just this one
 ```
 
-Builds run inside the `ghcr.io/qmk/qmk_cli` container via podman, so nothing gets installed on the host. Files land in `~/Documents/keyboards/<board>/`:
+Builds run inside the `ghcr.io/qmk/qmk_cli` container via podman, so nothing gets installed on the host. Files land in `~/Documents/keyboards/<board>/`, and each build is also copied to `erebor/keyboards/builds/<board>/<timestamp>/`. Older, hand-made builds are in `erebor/keyboards/`.
 
 - `jorne/jorne-LEFT-blok.uf2`: left half (Blok).
-- `jorne/jorne-RIGHT-promicro.hex`: right half (Pro Micro).
+- `jorne/jorne-RIGHT-rp2040ce.uf2`: right half (RP2040-CE).
 
 The Jorne and 3w6 build from upstream QMK (`~/qmk_firmware`). The Dilemma builds from `Bastardkb/bastardkb-qmk@bkb-develop` (`~/bastardkb-qmk`). Missing trees are cloned on first run.
 
@@ -66,18 +66,13 @@ The Dilemma doesn't build on current `bkb-develop`: `DPI_MOD`, `DPI_RMOD` and `S
 
 ## Flash
 
-Flash both halves after every keymap change.
+Both halves flash the same way. Flash both after every keymap change.
 
-- **Left (Blok):** hold BOOT while plugging in, then copy `jorne-LEFT-blok.uf2` onto the `RPI-RP2` drive.
-- **Right (Pro Micro):** start the command below, then short RST to GND twice. The bootloader stays open for about 8 s.
-
-  ```sh
-  podman run --rm -it --privileged -v /dev:/dev -v ~/Documents/keyboards/jorne:/fw ghcr.io/qmk/qmk_cli \
-    sh -c 'until ls /dev/ttyACM* 2>/dev/null; do sleep 0.5; done; avrdude -p atmega32u4 -c avr109 -P $(ls /dev/ttyACM* | head -1) -U flash:w:/fw/jorne-RIGHT-promicro.hex:i'
-  ```
+1. Unplug the keyboard and the TRRS cable.
+2. Hold BOOT while plugging the half in (or double-tap reset). An `RPI-RP2` drive appears.
+3. Copy that half's file onto the drive: `jorne-LEFT-blok.uf2` for the left, `jorne-RIGHT-rp2040ce.uf2` for the right. It reboots by itself.
 
 ## Hardware caveats
 
-- **USB:** always plug USB into the left (Blok) half. Handedness comes from `MASTER_LEFT`.
-- **Voltage:** the RP2040 is 3.3 V and its pins aren't 5 V tolerant. A 5 V Pro Micro drives the split serial line (D2 ↔ GP1) at 5 V, which can damage the Blok.
-- **Mixed controllers:** QMK doesn't officially support splits with two different MCUs. If the right half is dead after flashing, suspect the link between the halves, not the keymap. Two matching controllers fix it.
+- Plug USB into the left (Blok) half.
+- The halves use different converters (`blok` and `rp2040_ce`), so flash each half with its own file.
