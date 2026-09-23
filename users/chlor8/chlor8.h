@@ -30,6 +30,13 @@ enum custom_keycodes {
 #define GAME TG(_GAMING)
 #define GAMEN MO(_NUM_GAMING)
 
+// Outer thumbs. Tap = one-shot (press, release, then the letter — no hold on a
+// 36-key tuck); hold = a real Hyper modifier. Ctrl+Opt+Shift+Cmd collides with
+// nothing, so it is the cross-OS namespace for window/app actions: the same
+// chord binds in AeroSpace on macOS and sway on Linux.
+// Mirror the home-row convention — use the thumb opposite the letter's hand.
+#define HYPR_OSM OSM(MOD_HYPR)
+
 // Mac shortcuts on every host; Linux gets them via Toshy (keyboard type "Apple").
 #define LN_BEG  LGUI(KC_LEFT)
 #define LN_END  LGUI(KC_RGHT)
