@@ -8,7 +8,7 @@ userspace=$(cd "$(dirname "$0")" && pwd)
 out_root=${OUT_ROOT:-$HOME/Documents/keyboards}
 main_home=${QMK_HOME:-$HOME/qmk_firmware}
 bkb_home=${BKB_HOME:-$HOME/bastardkb-qmk}
-backup_root=${BACKUP_ROOT:-/var/home/bazzite/erebor/keyboards/builds}
+backup_root=${BACKUP_ROOT:-$HOME/erebor/keyboards/builds}
 stamp=$(date +%Y-%m-%d_%H%M)
 
 ensure_tree() { # dir url branch
